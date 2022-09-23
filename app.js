@@ -65,26 +65,22 @@ const galleryItems = [
 ];
 
 const galleryRef = document.querySelector(".js-gallery");
-console.log(galleryRef);
+// console.log(galleryRef);
+// console.log(galleryItems);
+// console.log(galleryItems[0]);
 
-console.log(galleryItems);
+const makeMarkUp = ({ preview, original, description }) => {
+	return `<li class="gallery__item">
+	<a class="gallery__link"
+	href="https://cdn.pixabay.com/photo/2010/12/13/10/13/tulips-2546_1280.jpg">
+	<img  class="gallery__image"
+	src=${preview}
+	data-source="${original}"
+	alt="${description}"/>
+	</a>
+	</li>`
+}
 
+const makeGallery = galleryItems.map(makeMarkUp).join('')
 
-function makeMarkUp({ preview, original, description }) {
-	return
-	`	<li class="gallery__item">
-  <a
-    class="gallery__link"
-    href="https://cdn.pixabay.com/photo/2010/12/13/10/13/tulips-2546_1280.jpg"
-  >
-    <img
-      class="gallery__image"
-      src="${preview}"
-      data-source="${original}"
-      alt="${description}"
-    />
-  </a>
-</li>`
-};
-// const markUp = galleryItems.forEach(makeMarkUp).join('');
-// console.log(markUp);
+galleryRef.insertAdjacentHTML('beforeend', makeGallery);
