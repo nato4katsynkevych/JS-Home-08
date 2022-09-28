@@ -65,14 +65,14 @@ const galleryItems = [
 ];
 
 const galleryRef = document.querySelector(".js-gallery");
-// console.log(galleryRef);
-// console.log(galleryItems);
-// console.log(galleryItems[0]);
+const lightboxRef = document.querySelector('.js-lightbox');
+const imgRef = document.querySelector('img.lightbox__image');
+const overlayRef = document.querySelector('.lightbox__overlay');
+const btmRef = document.querySelector(`[data-action="close-lightbox"]`);
+
 
 const makeMarkUp = ({ preview, original, description }) => {
 	return `<li class="gallery__item">
-	<a class="gallery__link"
-	href="https://cdn.pixabay.com/photo/2010/12/13/10/13/tulips-2546_1280.jpg">
 	<img  class="gallery__image"
 	src=${preview}
 	data-source="${original}"
@@ -81,6 +81,23 @@ const makeMarkUp = ({ preview, original, description }) => {
 	</li>`
 }
 
-const makeGallery = galleryItems.map(makeMarkUp).join('')
+const makeGallery = galleryItems.map(makeMarkUp).join('');
 
 galleryRef.insertAdjacentHTML('beforeend', makeGallery);
+galleryRef.addEventListener('click', onImg);
+btmRef.addEventListener('click', onClose);
+overlayRef.addEventListener('click', onClose);
+lightboxRef.addEventListener('keypress', onClose);
+
+
+function onImg(e) {
+	lightboxRef.classList.add("is-open");
+
+	imgRef.src = e.target.dataset.source;
+	imgRef.alt = e.target.alt
+}
+function onClose(e) {
+	lightboxRef.classList.remove("is-open");
+	imgRef.src = '';
+	imgRef.alt = '';
+}
